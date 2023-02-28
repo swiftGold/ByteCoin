@@ -80,29 +80,17 @@ final class MainViewController: UIViewController {
     
     private var coinManager = CoinManager()
     private var coinViewModel: CoinModel?
+    private let apiService: APIServiceProtocol = APIService(networkManager: NetworkManager(), jsonDecoderManager: JSONDecoderManager())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewController()
-        coinManager.delegate = self
+        fetchStartCoin()
     }
     
     @objc
     private func changeCurrencyButtonTapped() {
         print(#function)
-    }
-}
-
-extension MainViewController: CoinManagerDelegate {
-    func didFailWithError(error: Error) {
-
-    }
-    
-    func didUpdateCurrency(with model: CoinModel) {
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.costLabel.text = model.rateString
-        }
     }
 }
 
@@ -124,11 +112,42 @@ extension MainViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let currency = coinManager.currencyArray[row]
         currencyLabel.text = String(currency + " ")
-        coinManager.fetchCoinCurrency(currency: currency)
+        fetchCurrencyCoin(currency: currency)
     }
 }
 
 private extension MainViewController {
+    func fetchCurrencyCoin(currency: String) {
+        apiService.fetchCurrencyCoin(currency: currency) { [weak self] result in
+            switch result {
+                
+            case .success(let response):
+                let viewModel: CoinModel = .init(quoteId: response.asset_id_quote, rate: response.rate)
+                self?.setCostLabel(with: viewModel)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchStartCoin() {
+        apiService.fetchStartCoin { [weak self] result in
+            switch result {
+                
+            case .success(let response):
+                let viewModel: CoinModel = .init(quoteId: response.asset_id_quote, rate: response.rate)
+                self?.setCostLabel(with: viewModel)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func setCostLabel(with model: CoinModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.costLabel.text = "\(model.rateString)"
+        }
+    }
     
     func setupViewController() {
         view.backgroundColor = .systemMint
