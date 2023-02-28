@@ -70,61 +70,47 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var pickerView: UIPickerView = {
-        let pickerView = UIPickerView()
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
-        return pickerView
-    }()
-    
-    private var coinManager = CoinManager()
-    private var coinViewModel: CoinModel?
-    
+    private let apiService = APIService(networkManager: NetworkManager(),
+                                        jsonDecoderManager: JSONDecoderManager())
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewController()
-        coinManager.delegate = self
+//        apiService.fetchPosts {[weak self] result in
+//            switch result {
+//
+//            case .success(let response):
+//                self?.setupCostLabel(with: response)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+        
+        apiService.fetchCoin { [weak self] result in
+            switch result {
+                
+            case .success(let response):
+                
+                let model: CoinModel = .init(quoteId: response.asset_id_quote, rate: response.rate)
+                
+                
+                self?.setupCostLabel(with: model)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func setupCostLabel(with model: CoinModel) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.costLabel.text = "\(model.rateString)"
+        }
     }
     
     @objc
     private func changeCurrencyButtonTapped() {
         print(#function)
-    }
-}
-
-extension MainViewController: CoinManagerDelegate {
-    func didFailWithError(error: Error) {
-
-    }
-    
-    func didUpdateCurrency(with model: CoinModel) {
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.costLabel.text = model.rateString
-        }
-    }
-}
-
-extension MainViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        coinManager.currencyArray.count
-    }
-}
-
-extension MainViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return coinManager.currencyArray[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let currency = coinManager.currencyArray[row]
-        currencyLabel.text = String(currency + " ")
-        coinManager.fetchCoinCurrency(currency: currency)
     }
 }
 
@@ -145,7 +131,6 @@ private extension MainViewController {
         topStackView.addArrangedSubview(currencyStackView)
         
         view.addSubview(topStackView)
-        view.addSubview(pickerView)
     }
     
     func setConstraints() {
@@ -153,10 +138,7 @@ private extension MainViewController {
             topStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            
-            pickerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
+
             changeCurrencyButton.widthAnchor.constraint(equalToConstant: 80),
             changeCurrencyButton.heightAnchor.constraint(equalToConstant: 80)
         ])

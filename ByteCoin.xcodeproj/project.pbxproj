@@ -15,6 +15,10 @@
 		542C33D5299FB01D00A3A851 /* CoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C33D4299FB01D00A3A851 /* CoinManager.swift */; };
 		542C33DA299FBD2800A3A851 /* CoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C33D9299FBD2800A3A851 /* CoinData.swift */; };
 		542C33DC299FC63300A3A851 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C33DB299FC63300A3A851 /* CoinModel.swift */; };
+		542C33DE29A4CE7700A3A851 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C33DD29A4CE7700A3A851 /* APIService.swift */; };
+		542C33E029A4CE9F00A3A851 /* JSONDecoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C33DF29A4CE9F00A3A851 /* JSONDecoderManager.swift */; };
+		542C33E229A4CED100A3A851 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C33E129A4CED100A3A851 /* NetworkManager.swift */; };
+		54CB2D9B29A61450008446BE /* PostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CB2D9A29A61450008446BE /* PostResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		542C33D4299FB01D00A3A851 /* CoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinManager.swift; sourceTree = "<group>"; };
 		542C33D9299FBD2800A3A851 /* CoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinData.swift; sourceTree = "<group>"; };
 		542C33DB299FC63300A3A851 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
+		542C33DD29A4CE7700A3A851 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		542C33DF29A4CE9F00A3A851 /* JSONDecoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderManager.swift; sourceTree = "<group>"; };
+		542C33E129A4CED100A3A851 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		54CB2D9A29A61450008446BE /* PostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +91,9 @@
 		542C33D3299FB01100A3A851 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				542C33D4299FB01D00A3A851 /* CoinManager.swift */,
+				542C33DD29A4CE7700A3A851 /* APIService.swift */,
+				542C33DF29A4CE9F00A3A851 /* JSONDecoderManager.swift */,
+				542C33E129A4CED100A3A851 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -93,6 +103,8 @@
 			children = (
 				542C33D9299FBD2800A3A851 /* CoinData.swift */,
 				542C33DB299FC63300A3A851 /* CoinModel.swift */,
+				542C33D4299FB01D00A3A851 /* CoinManager.swift */,
+				54CB2D9A29A61450008446BE /* PostResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,11 +179,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				542C33E229A4CED100A3A851 /* NetworkManager.swift in Sources */,
 				542C33DA299FBD2800A3A851 /* CoinData.swift in Sources */,
+				54CB2D9B29A61450008446BE /* PostResponse.swift in Sources */,
+				542C33DE29A4CE7700A3A851 /* APIService.swift in Sources */,
 				542C33D5299FB01D00A3A851 /* CoinManager.swift in Sources */,
 				542C33C3299FAA4500A3A851 /* MainViewController.swift in Sources */,
 				542C33BF299FAA4500A3A851 /* AppDelegate.swift in Sources */,
 				542C33DC299FC63300A3A851 /* CoinModel.swift in Sources */,
+				542C33E029A4CE9F00A3A851 /* JSONDecoderManager.swift in Sources */,
 				542C33C1299FAA4500A3A851 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

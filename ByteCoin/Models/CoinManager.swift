@@ -16,9 +16,6 @@ struct CoinManager {
     let baseURL = "https://rest.coinapi.io/v1/exchangerate/BTC"
     let apiKey = "469824B9-F3B5-489A-84A1-2EA497DF3DBE"
     
-    let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"
-    ]
-    
     weak var delegate: CoinManagerDelegate?
     
     func fetchStartCoinCurrency() {
@@ -26,7 +23,7 @@ struct CoinManager {
         print(urlString)
         performRequest(urlString: urlString)
     }
-        
+//    "https://rest.coinapi.io/v1/exchangerate/BTC/AUD?apikey=469824B9-F3B5-489A-84A1-2EA497DF3DBE"
     func fetchCoinCurrency(currency: String) {
         let urlString = "\(baseURL)/\(currency)?apikey=\(apiKey)"
         print(urlString)
